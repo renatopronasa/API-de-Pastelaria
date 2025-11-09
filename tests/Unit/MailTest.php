@@ -5,28 +5,28 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\PedidoCriado;
-use App\Models\Pedido;
-use App\Models\Cliente;
-use App\Models\Produto;
+use App\Mail\OrderCreated;
+use App\Models\Order;
+use App\Models\Customer;
+use App\Models\Product;
 
 class MailTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_email_pedido_criado()
+    public function test_order_created_email()
     {
         Mail::fake();
 
-        $cliente = Cliente::factory()->create();
-        $produto = Produto::factory()->create();
-        $pedido = Pedido::factory()->create(['cliente_id' => $cliente->id]);
-        $pedido->produtos()->attach($produto->id, ['quantidade' => 2]);
+        $customer = Customer::factory()->create();
+        $product = Product::factory()->create();
+        $order = Order::factory()->create(['customer_id' => $customer->id]);
+        $order->products()->attach($product->id, ['quantity' => 2]);
 
-        Mail::to($cliente->email)->send(new PedidoCriado($pedido));
+        Mail::to($customer->email)->send(new OrderCreated($order));
 
-        Mail::assertSent(PedidoCriado::class, function ($mail) use ($cliente) {
-            return $mail->hasTo($cliente->email);
+        Mail::assertSent(OrderCreated::class, function ($mail) use ($customer) {
+            return $mail->hasTo($customer->email);
         });
     }
 }

@@ -7,30 +7,30 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Pedido;
+use App\Models\Order;
 
-class PedidoCriado extends Mailable
+class OrderCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $pedido;
+    public $order;
 
-    public function __construct(Pedido $pedido)
+    public function __construct(Order $order)
     {
-        $this->pedido = $pedido;
+        $this->order = $order;
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pedido Criado',
+            subject: 'Order Created',
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.pedido.criado'
+            markdown: 'emails.order.created'
         );
     }
 

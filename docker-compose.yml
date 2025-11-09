@@ -2,10 +2,11 @@ version: '3.8'
 
 services:
   app:
+    container_name: pastelaria_app
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pastelaria_app
+    restart: unless-stopped
     working_dir: /var/www
     volumes:
       - ./:/var/www
@@ -13,19 +14,49 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    networks:
+      - pastelaria_network
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=pastelaria
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
 
   db:
     image: mysql:8.0
     container_name: pastelaria_db
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: pastelaria
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - pastelaria_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pastelaria_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - pastelaria_network
+
+networks:
+  pastelaria_network:
 
 volumes:
   db_data:

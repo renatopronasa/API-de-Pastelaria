@@ -1,7 +1,7 @@
 @component('mail::message')
 # Pedido Criado
 
-Olá {{ $pedido->cliente->nome }},
+Olá {{ $order->customer->nome }},
 
 Seu pedido foi criado com sucesso! 
 
@@ -10,12 +10,12 @@ Aqui estão os detalhes do seu pedido:
 @component('mail::table')
 | Produto | Quantidade |
 |---------|------------|
-@foreach($pedido->produtos as $produto)
-| {{ $produto->nome }} | {{ $produto->pivot->quantidade }} |
+@foreach($order->products as $product)
+| {{ $product->nome }} | {{ $product->pivot->quantity }} |
 @endforeach
 @endcomponent
 
-Agradecemos a preferencia!
+Agradecemos a preferência!
 
 {{ config('app.name') }}
 @endcomponent
