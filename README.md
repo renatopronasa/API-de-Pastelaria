@@ -45,8 +45,8 @@ Regras:
 
 - **Order → Product** → `N:N`
 - Um pedido pode conter vários produtos;
-- Essa relação é representada por um método orders() dentro do model Product, usando belongsToMany();
-- No código, essa relação é representada pelo método products() no model Order.
+- Essa relação é representada por um método orders dentro do model Product, usando belongsToMany;
+- No código, essa relação é representada pelo método products no model Order.
 
 - **Product → Order** → `N:N`
 
@@ -67,9 +67,9 @@ Regras e comportamentos:
 ---
 
 ## Envio de E-mails
-O envio de e-mails é feito automaticamente após a criação de um novo pedido (Order);
-Foi criado um arquivo de teste específico (MailTest.php) para validar o envio de e-mails de confirmação de pedido;
-Esse teste simula a criação de um cliente, um produto e um pedido, e verifica se o e-mail foi enviado corretamente para o cliente após a criação do pedido, garantindo o funcionamento da classe OrderCreated responsável pela notificação.
+- O envio de e-mails é feito automaticamente após a criação de um novo pedido (Order);
+- Foi criado um arquivo de teste específico (MailTest.php) para validar o envio de e-mails de confirmação de pedido;
+- Esse teste simula a criação de um cliente, um produto e um pedido, e verifica se o e-mail foi enviado corretamente para o cliente após a criação do pedido, garantindo o funcionamento da classe OrderCreated responsável pela notificação.
 
 ---
 
